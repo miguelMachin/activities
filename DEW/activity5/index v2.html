@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Activity 5: the audio tag + events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      .controls div{
+        float: left;
+        margin: 10px;
+        border: 3px solid #000;
+        font-size: 2em;
+        text-align: center;
+        width: 50px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Activity 5: the audio tag + events</h1>
+    <p>This is a music player with a playlist</p>
+    <ul>
+      <li>Add a play icon to the item in the playlist that is currently playing.</li>
+      <li>Add controls to <a href="https://developer.mozilla.org/es/docs/Web/HTML/Elemento/audio">audio tag</a>: play/pause, go back, go forward.</li>
+      <li>When 1 audio ends the following one must estart playing automatically</li>
+    </ul>
+
+    <ol class="playlist">
+      <li><i></i>music1.mp3 </li>
+      <li><i class="fa fa-bullhorn"></i>music2.mp3</li>
+      <li><i></i>music3.mp3</li>
+    </ol>
+    <audio>
+     <source src="warcry_la_vida_en_un_beso_sEl3wH2J8co.mp3" type="audio/mpeg">
+     <source src="si_amaneciera.mp3" type="audio/mpeg">
+     <source src="papercut.mp3" type="audio/mpeg">
+     Your browser does not support the audio tag.
+    </audio>
+    <div class="controls">
+      <div class="play"><i class="fa fa-play"></i></div>
+      <div class="backward"><i class="fa fa-step-backward"></i></div>
+      <div class="fordward"><i class="fa fa-step-forward"></i></div>
+    </div>
+    <script>
+    	
+    	function cPlay(audio){
+    		if (!playing){
+    			audio.play();
+    			playing = true;
+    		}else{
+    			audio.pause();
+    			playing = false;
+    		}
+    	}
+
+    	function cBackward(audio,playlist){
+    		if (songNumber == 0){
+    			playlist.children[songNumber].children[0].classList.remove("fa");
+    			playlist.children[songNumber].children[0].classList.remove("fa-bullhorn");
+    			songNumber = playlist.children.length-1; 
+    			audio.src = audio.children[songNumber].src;
+    			playlist.children[songNumber].children[0].classList.add("fa");
+    			playlist.children[songNumber].children[0].classList.add("fa-bullhorn");
+    			playing = false;
+    			cPlay(audio);
+    		}else{
+    			playlist.children[songNumber].children[0].classList.remove("fa");
+    			playlist.children[songNumber].children[0].classList.remove("fa-bullhorn");
+    			songNumber--;
+    			audio.src = audio.children[songNumber].src;
+    			playlist.children[songNumber].children[0].classList.add("fa");
+    			playlist.children[songNumber].children[0].classList.add("fa-bullhorn");
+    			playing = false;
+    			cPlay(audio);
+    		}
+
+    	}
+    	function cFordward(audio,playlist){
+    		if (songNumber == playlist.children.length-1){
+    			playlist.children[songNumber].children[0].classList.remove("fa");
+    			playlist.children[songNumber].children[0].classList.remove("fa-bullhorn");
+    			songNumber = 0; 
+    			audio.src = audio.children[songNumber].src;
+    			playlist.children[songNumber].children[0].classList.add("fa");
+    			playlist.children[songNumber].children[0].classList.add("fa-bullhorn");
+    			playing = false;
+    			cPlay(audio);
+    		}else{
+    			playlist.children[songNumber].children[0].classList.remove("fa");
+    			playlist.children[songNumber].children[0].classList.remove("fa-bullhorn");
+    			songNumber++;
+    			audio.src = audio.children[songNumber].src;
+    			playlist.children[songNumber].children[0].classList.add("fa");
+    			playlist.children[songNumber].children[0].classList.add("fa-bullhorn");
+    			playing = false;
+    			cPlay(audio);
+    		}
+    	}
+    	let playing = false;
+    	let songNumber = 1;
+    	
+    	var audio = document.getElementsByTagName("audio")[0];
+    	var play = document.getElementsByClassName("play")[0];
+    	var backward = document.getElementsByClassName("backward")[0];
+    	var fordward = document.getElementsByClassName("fordward")[0];
+    	var playlist =document.getElementsByClassName("playlist")[0] ;
+    	audio.src = audio.children[1].src;
+    	play.addEventListener("click",function(){
+    		cPlay(audio,playlist);
+    	});
+
+    	backward.addEventListener("click",function(){
+    		cBackward(audio,playlist);
+    	});
+    	fordward.addEventListener("click",function(){
+    		cFordward(audio,playlist);
+    	});
+    	audio.addEventListener("ended", function(){cFordward(audio,playlist);});
+    	cPlay(audio,playlist);
+
+    </script>
+  </body>
+</html>

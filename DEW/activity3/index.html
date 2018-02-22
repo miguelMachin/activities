@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"  crossorigin="anonymous"></script>
+    <title>Activity 3: Forms &amp; click event</title>
+  </head>
+  <body>
+    <h1>Activity 3: Forms &amp; click event</h1>
+    <p>Add a form with two fields ("Rows" and "Columns") and a button ("Generate Table"). When the button is clicked it have to:</p>
+      <ol>
+        <li>remove a table#generated if exists </li>
+        <li>Add a table with as many rows and columns both Rows and Columns fields indicate</li>
+        <li>Each table cell must contain a text like: "Row: X, Col: Y"</li>
+      </ol>
+
+    <!--<img src="./default.png" alt="just an image">-->
+    <form>
+      Rows : <input type="number" name="rows" id="rows">
+      Columns : <input type="number" name="columns" id="columns">
+     <!-- <input type="submit" name="generate" id="generateTable" value="Generate Table">-->
+     <button type="button" id="generateTable">Generate Table</button>
+    </form>
+    <script type="text/javascript">
+
+      function generateTable(){
+        $("#generate").remove();
+        $("body").append("<div id=\"generate\">");
+        $("#generate").append("<table></table>");
+        var rows = $("#rows").val();
+        var col = $("#columns").val();
+        for (var i = 0; i < rows; i++) {
+          $("#generate table").append("<tr class=\""+(i+1)+"\"></tr>");
+            for (var j = 0; j < col; j++) {
+                $("#generate table ."+(i+1)).append("<td>Row: ("+(i+1)+")Col: ("+(j+1)+")</td>");
+            } 
+         }
+      }
+
+      $("#generateTable").click(generateTable);
+        
+
+    </script>
+    
+  </body>
+</html>
